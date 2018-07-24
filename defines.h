@@ -33,6 +33,12 @@ typedef unsigned long ulong;
   #define TMP_BUFFER_SIZE      128   // scratch buffer size
 #endif
 
+
+// VALVE CONTROLLER
+
+#define IOT_SERVICE_TOKEN  "iot_service_token" // IoT Service auth key - replace with real token
+#define FLOW_DAILY_LOG_HOUR 23  	      // daily consumption log hour
+#define FLOW_DAILY_LOG_MINUTE 59          // daily consumption * hourly backup log minute
 /** Firmware version, hardware version, and maximal values */
 #define OS_FW_VERSION  218  // Firmware version: 218 means 2.1.8
                             // if this number is different from the one stored in non-volatile memory
@@ -121,7 +127,7 @@ typedef unsigned long ulong;
 
   #if defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__) // for 4KB NVM
 
-    #define MAX_EXT_BOARDS    6  // maximum number of exp. boards (each expands 8 stations)
+    #define MAX_EXT_BOARDS    2  // maximum number of exp. boards (each expands 8 stations)
     #define MAX_NUM_STATIONS  ((1+MAX_EXT_BOARDS)*8)  // maximum number of stations
 
     #define NVM_SIZE            4096  // For AVR, nvm data is stored in EEPROM, ATmega1284 has 4K EEPROM
@@ -137,7 +143,7 @@ typedef unsigned long ulong;
 
   #else
 
-    #define MAX_EXT_BOARDS    5  // maximum number of exp. boards (each expands 8 stations)
+    #define MAX_EXT_BOARDS    2  // maximum number of exp. boards (each expands 8 stations)
     #define MAX_NUM_STATIONS  ((1+MAX_EXT_BOARDS)*8)  // maximum number of stations
 
     #define NVM_SIZE            2048  // For AVR, nvm data is stored in EEPROM, ATmega644 has 2K EEPROM
@@ -167,7 +173,7 @@ typedef unsigned long ulong;
   // But they can be increased if needed
   #define NVM_FILENAME        "nvm.dat" // for RPI/BBB, nvm data is stored in a file
 
-  #define MAX_EXT_BOARDS    8  // maximum number of 8-station exp. boards (a 16-station expander counts as 2)
+  #define MAX_EXT_BOARDS    2 // maximum number of 8-station exp. boards (a 16-station expander counts as 2)
   #define MAX_NUM_STATIONS  ((1+MAX_EXT_BOARDS)*8)  // maximum number of stations
 
   #define NVM_SIZE            8192

