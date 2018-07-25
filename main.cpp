@@ -306,8 +306,15 @@ void ui_state_machine() {
           os.lcd_print_line_clear_pgm(PSTR("Click B3 to list"), 1);
           ui_state = UI_STATE_RUNPROG;
         }
-      } else {  // clicking B3: switch board display (cycle through master and all extension boards)
-        os.status.display_board = (os.status.display_board + 1) % (os.nboards);
+      } else {  // clicking B3: Show pulses count - was "switch board display (cycle through master and all extension boards)"
+    	  //os.status.display_board = (os.status.display_board + 1) % (os.nboards);
+    	  os.lcd.clear(0, 1);
+    	  os.lcd.setCursor(0, 1);
+    	  os.lcd_print_pgm(PSTR("(Pulses count)"));
+    	  ultoa(flow_count, tmp_buffer, 10);
+    	  os.lcd.setCursor(0, 2);
+    	  os.lcd.print(tmp_buffer);
+    	  ui_state = UI_STATE_DISP_IP;
       }
       break;
     }
