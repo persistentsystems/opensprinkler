@@ -276,8 +276,8 @@ byte OpenSprinkler::options[] = {
   0,
   0,
 #if defined(ARDUINO)  // on AVR, the default HTTP port is 80
-  80, // this and next byte define http port number
-  0,
+  144, // this and next byte define http port number
+  31,
 #else // on RPI/BBB/LINUX, the default HTTP port is 8080
   144,// this and next byte define http port number
   31,
