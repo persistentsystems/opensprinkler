@@ -29,6 +29,7 @@
 #include "gpio.h"
 #include "images.h"
 #include "testmode.h"
+#include "certificate.h"
 
 /** Declare static data members */
 NVConData OpenSprinkler::nvdata;
@@ -382,6 +383,7 @@ byte OpenSprinkler::start_network() {
     uint16_t httpport = (uint16_t)(options[OPTION_HTTPPORT_1]<<8) + (uint16_t)options[OPTION_HTTPPORT_0];
 		wifi_server = new ESP8266WebServerSecure(httpport);
   }
+  wifi_server->setServerKeyAndCert_P(rsakey, sizeof(rsakey), x509, sizeof(x509));
   status.has_hwmac = 1;
   
 #else

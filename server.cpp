@@ -1997,7 +1997,7 @@ void on_ap_upload() {
 }
 
 void start_server_client() {
-	wifi_server->setServerKeyAndCert_P(rsakey, sizeof(rsakey), x509, sizeof(x509));
+	//wifi_server->setServerKeyAndCert_P(rsakey, sizeof(rsakey), x509, sizeof(x509));
   wifi_server->on("/", server_home);  // handle home page
   wifi_server->on("/index.html", server_home);
   wifi_server->on("/update", HTTP_GET, on_sta_update); // handle firmware update
@@ -2021,7 +2021,7 @@ void start_server_ap() {
   String ap_ssid = get_ap_ssid();
   start_network_ap(ap_ssid.c_str(), NULL);
   delay(500);
-  wifi_server->setServerKeyAndCert_P(rsakey, sizeof(rsakey), x509, sizeof(x509));
+  //wifi_server->setServerKeyAndCert_P(rsakey, sizeof(rsakey), x509, sizeof(x509));
   wifi_server->on("/", on_ap_home);
   wifi_server->on("/jsap", on_ap_scan);
   wifi_server->on("/ccap", on_ap_change_config);
