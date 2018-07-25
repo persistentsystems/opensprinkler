@@ -8,7 +8,7 @@ LIBS = .\
   $(ESP_LIBS)/rc-switch \
 
 ESP_ROOT = $(HOME)/esp8266_2.4/
-BUILD_ROOT = /tmp/$(MAIN_NAME)
+BUILD_ROOT = $(HOME)/OpenSprinklerBin/$(MAIN_NAME)
 
 UPLOAD_SPEED = 230400
 UPLOAD_VERB = -v
