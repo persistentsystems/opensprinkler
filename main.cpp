@@ -34,6 +34,9 @@
 
 #ifdef ESP8266
   #include <FS.h>
+  #include "ets_sys.h"
+	#include "osapi.h"                                         // for os timers
+	#include "os_type.h"
   #include "gpio.h"
   #include "espconnect.h"
   char ether_buffer[ETHER_BUFFER_SIZE];
@@ -76,6 +79,14 @@ void httpget_callback(byte, uint16_t, uint16_t);
 
 extern char tmp_buffer[];       // scratch buffer
 
+const unsigned int debounce_period = 1; // milli-seconds. Change as appropriate.
+volatile bool debounce_in_progress = false;
+volatile unsigned long intr_count = 0;
+unsigned long last_intr_count = 0;
+unsigned long last_flow_count = 0;
+
+os_timer_t debounce_timer;
+
 #ifdef ESP8266
 ESP8266WebServer *wifi_server = NULL;
 static uint16_t led_blink_ms = LED_FAST_BLINK;
@@ -92,6 +103,18 @@ ulong flow_station_start_gallons = 0;
 float flow_station_gallons = 0;
 byte prev_flow_state = HIGH;
 
+#ifdef ESP8266
+void debounce_timer_cb(void *arg){
+	if (digitalRead(PIN_FLOWSENSOR) == LOW) {
+		flow_count++;
+	}
+}
+
+void setup_debounce_timer(void) {
+	os_timer_disarm(&debounce_timer);
+	os_timer_setfn(&debounce_timer,  (os_timer_func_t *)debounce_timer_cb, NULL);
+}
+#else
 void flow_poll() {
   byte curr_flow_state = digitalReadExt(PIN_FLOWSENSOR);
   if(os.options[OPTION_SENSOR1_TYPE]!=SENSOR_TYPE_FLOW) return;
@@ -111,20 +134,43 @@ void flow_poll() {
   os.flowcount_time_ms = curr;
 
 }
-
+#endif
 
 volatile byte flow_isr_flag = false;
 /** Flow sensor interrupt service routine */
 #ifdef ESP8266
-
 ICACHE_RAM_ATTR void flow_isr() // for ESP8266, ISR must be marked ICACHE_RAM_ATTR
+{
+ if(os.options[OPTION_SENSOR1_TYPE]!=SENSOR_TYPE_FLOW) return;
+  intr_count++;
+  os_timer_arm(&debounce_timer, debounce_period, NULL);        // One-shot  
+}
 #else
 void flow_isr()
-#endif
 {
   flow_isr_flag = true;
-}
 
+}
+#endif
+
+#ifdef ESP8266
+void update_pulse_count() {
+	if (intr_count > last_intr_count || flow_count > last_flow_count) {
+		last_intr_count = intr_count;
+		last_flow_count = flow_count;
+		DEBUG_PRINT("Intr_count: ");
+		DEBUG_PRINT(intr_count);
+		DEBUG_PRINT("   Flow_count: ");
+		DEBUG_PRINTLN(flow_count);
+		os.lcd.setCursor(0, 2);
+		ultoa(intr_count, tmp_buffer, 10);
+		os.lcd.print(tmp_buffer);  
+		os.lcd.setCursor(10, 2);
+		ultoa(flow_count, tmp_buffer, 10);
+		os.lcd.print(tmp_buffer);
+    }
+}
+#endif
 
 
 //flow logs helper functions
@@ -396,6 +442,10 @@ void do_setup() {
   os.apply_all_station_bits(); // reset station bits
 
   os.button_timeout = LCD_BACKLIGHT_TIMEOUT;
+
+#ifdef ESP8266  
+  setup_debounce_timer();
+#endif
 }
 
 // Arduino software reset function
@@ -455,6 +505,7 @@ void handle_web_request(char *p);
 /** Main Loop */
 void do_loop()
 {
+#ifndef ESP8266
   /* If flow_isr_flag is on, do flow sensing.
      todo: not the most efficient way, as we can't do I2C inside ISR.
      need to figure out a more efficient way to do flow sensing */
@@ -462,6 +513,10 @@ void do_loop()
     flow_isr_flag = false;
     flow_poll();
   }
+#else
+	update_pulse_count();  
+#endif
+	
 
   static ulong last_time = 0;
   static ulong last_minute = 0;
