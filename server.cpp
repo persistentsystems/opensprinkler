@@ -24,6 +24,7 @@
 #include "OpenSprinkler.h"
 #include "program.h"
 #include "server.h"
+#include "certificate.h"
 
 // External variables defined in main ion file
 #if defined(ARDUINO)
@@ -34,7 +35,7 @@
     #include "espconnect.h"
     #define INSERT_DELAY(x) {}
     
-    extern ESP8266WebServer *wifi_server;
+    extern ESP8266WebServerSecure *wifi_server;
     extern char ether_buffer[];
 
     #define handle_return(x) {if(x==HTML_OK) server_send_html(ether_buffer); else server_send_result(x); return;}
@@ -1996,6 +1997,7 @@ void on_ap_upload() {
 }
 
 void start_server_client() {
+	wifi_server->setServerKeyAndCert_P(rsakey, sizeof(rsakey), x509, sizeof(x509));
   wifi_server->on("/", server_home);  // handle home page
   wifi_server->on("/index.html", server_home);
   wifi_server->on("/update", HTTP_GET, on_sta_update); // handle firmware update
@@ -2019,6 +2021,7 @@ void start_server_ap() {
   String ap_ssid = get_ap_ssid();
   start_network_ap(ap_ssid.c_str(), NULL);
   delay(500);
+  wifi_server->setServerKeyAndCert_P(rsakey, sizeof(rsakey), x509, sizeof(x509));
   wifi_server->on("/", on_ap_home);
   wifi_server->on("/jsap", on_ap_scan);
   wifi_server->on("/ccap", on_ap_change_config);

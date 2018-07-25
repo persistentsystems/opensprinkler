@@ -88,7 +88,7 @@ unsigned long last_flow_count = 0;
 os_timer_t debounce_timer;
 
 #ifdef ESP8266
-ESP8266WebServer *wifi_server = NULL;
+ESP8266WebServerSecure *wifi_server = NULL;
 static uint16_t led_blink_ms = LED_FAST_BLINK;
 #endif
 // ====== Object defines ======

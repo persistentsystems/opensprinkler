@@ -68,7 +68,7 @@ IOEXP* OpenSprinkler::expanders[(MAX_EXT_BOARDS+1)/2];
 IOEXP* OpenSprinkler::mainio;
 IOEXP* OpenSprinkler::drio;
 RCSwitch OpenSprinkler::rfswitch;
-extern ESP8266WebServer *wifi_server;
+extern ESP8266WebServerSecure *wifi_server;
 extern char ether_buffer[];
 #endif
 
@@ -377,10 +377,10 @@ byte OpenSprinkler::start_network() {
   lcd_print_line_clear_pgm(PSTR("Starting..."), 1);
   if(wifi_server) delete wifi_server;
   if(get_wifi_mode()==WIFI_MODE_AP) {
-    wifi_server = new ESP8266WebServer(80);
+    wifi_server = new ESP8266WebServerSecure(8080);
   } else {
     uint16_t httpport = (uint16_t)(options[OPTION_HTTPPORT_1]<<8) + (uint16_t)options[OPTION_HTTPPORT_0];
-    wifi_server = new ESP8266WebServer(httpport);
+		wifi_server = new ESP8266WebServerSecure(httpport);
   }
   status.has_hwmac = 1;
   
