@@ -914,23 +914,17 @@ void do_loop()
     	if (curr_time % FLOWCOUNT_RT_WINDOW == 0) {
     		os.flowcount_rt = (flow_count > flowcount_rt_start) ? flow_count - flowcount_rt_start: 0;
     		flowcount_rt_start = flow_count;
+    		ulong curr_gallons = os.flowcount_rt;
 
-
-
-    		//update real time gallons
-    		if(is_flowing && flow_satbilized_end_time <= curr_time){//if stabilization time passed
-    			flow_satbilized_end_time = 0;
-    			ulong curr_gallons = os.flowcount_rt;
-
-    			if(addition_is_safe(flow_gallons_count, curr_gallons) == false){//prevent overflow
-    				//rebase according the smallest count reference
-    				ulong minref = (os.flowcount_log_start < flow_station_start_gallons ? os.flowcount_log_start : flow_station_start_gallons);
-    				flow_gallons_count = flow_gallons_count - minref;
-    				flow_station_start_gallons = flow_station_start_gallons - minref;
-    				os.flowcount_log_start = os.flowcount_log_start - minref;
-    			}
-    			flow_gallons_count += curr_gallons;
+    		if(addition_is_safe(flow_gallons_count, curr_gallons) == false){//prevent overflow
+    			//rebase according the smallest count reference
+    			ulong minref = (os.flowcount_log_start < flow_station_start_gallons ? os.flowcount_log_start : flow_station_start_gallons);
+    			flow_gallons_count = flow_gallons_count - minref;
+    			flow_station_start_gallons = flow_station_start_gallons - minref;
+    			os.flowcount_log_start = os.flowcount_log_start - minref;
     		}
+    		flow_gallons_count += curr_gallons;
+    		
 
     		if(os.sensor_lasttime == 0){
     			os.flowcount_log_start = flow_gallons_count;
