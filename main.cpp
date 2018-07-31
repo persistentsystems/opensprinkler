@@ -85,9 +85,9 @@ volatile unsigned long intr_count = 0;
 unsigned long last_intr_count = 0;
 unsigned long last_flow_count = 0;
 
-os_timer_t debounce_timer;
 
 #ifdef ESP8266
+os_timer_t debounce_timer;
 ESP8266WebServerSecure *wifi_server = NULL;
 static uint16_t led_blink_ms = LED_FAST_BLINK;
 #endif
