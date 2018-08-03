@@ -1998,9 +1998,12 @@ void on_ap_upload() {
 
 void start_server_client() {
 	//wifi_server->setServerKeyAndCert_P(rsakey, sizeof(rsakey), x509, sizeof(x509));
+	#if 0
+	//disable web UI
   wifi_server->on("/", server_home);  // handle home page
   wifi_server->on("/index.html", server_home);
   wifi_server->on("/update", HTTP_GET, on_sta_update); // handle firmware update
+  #endif
   wifi_server->on("/update", HTTP_POST, on_sta_upload_fin, on_sta_upload);  
   
   // set up all other handlers
