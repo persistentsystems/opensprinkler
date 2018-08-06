@@ -8,7 +8,8 @@
 
 
 #if DEVICE_ID==PSL_BOARD_1
-#include <pslBoard1Certificate.h>
+//#include <pslBoard1Certificate.h>
+#include <pslBoard1CertificateLocal.h>
 #elif DEVICE_ID==PSL_BOARD_2
 #include <pslBoard2Certificate.h>
 #elif DEVICE_ID==PSL_BOARD_3
