@@ -4,7 +4,7 @@
 #define PSL_BOARD_3		3
 #define KIM_BOARD_1		4		//board at Kim's house
 
-#define DEVICE_ID	PSL_BOARD_1
+#define DEVICE_ID	PSL_BOARD_2
 
 
 #if DEVICE_ID==PSL_BOARD_1
