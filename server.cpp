@@ -2002,8 +2002,8 @@ void start_server_client() {
 	//disable web UI
   wifi_server->on("/", server_home);  // handle home page
   wifi_server->on("/index.html", server_home);
+    #endif
   wifi_server->on("/update", HTTP_GET, on_sta_update); // handle firmware update
-  #endif
   wifi_server->on("/update", HTTP_POST, on_sta_upload_fin, on_sta_upload);  
   
   // set up all other handlers
