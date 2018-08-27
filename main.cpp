@@ -493,6 +493,7 @@ void check_network();
 void check_weather();
 void perform_ntp_sync();
 void delete_log(char *name);
+void clear_old_logs(ulong curr_time);
 
 #ifdef ESP8266
 void start_server_ap();
@@ -1003,6 +1004,11 @@ void do_loop()
     			//reset for next log
     			os.flowcount_log_start = flow_gallons_count;
     			os.sensor_lasttime = curr_time;
+
+    			if(is_time(curr_time,FLOW_DAILY_LOG_HOUR,FLOW_DAILY_LOG_MINUTE){
+    				//this is the end of the day log - use this time also to clear old logs
+    				clear_old_logs(curr_time);
+    			}
     		}
     	}
     }
@@ -1521,7 +1527,7 @@ static const char log_type_names[] PROGMEM =
     "fl\0";
 
 
-void clear_old_logs(){
+void clear_old_logs(ulong curr_time){
 #ifdef ESP8266
 
 	//get the first old log to delete
