@@ -1005,7 +1005,7 @@ void do_loop()
     			os.flowcount_log_start = flow_gallons_count;
     			os.sensor_lasttime = curr_time;
 
-    			if(is_time(curr_time,FLOW_DAILY_LOG_HOUR,FLOW_DAILY_LOG_MINUTE){
+    			if(is_time(curr_time,FLOW_DAILY_LOG_HOUR,FLOW_DAILY_LOG_MINUTE)){
     				//this is the end of the day log - use this time also to clear old logs
     				clear_old_logs(curr_time);
     			}
