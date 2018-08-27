@@ -290,7 +290,7 @@ byte OpenSprinkler::options[] = {
   0,  // index of master station. 0: no master station
   120,// master on time adjusted time (-10 minutes to 10 minutes)
   120,// master off adjusted time (-10 minutes to 10 minutes)
-  0,  // sensor 1 type (see SENSOR_TYPE macro defines)
+  0x02,  // 3PE - use flow sensor by default sensor 1 type (see SENSOR_TYPE macro defines)
   0,  // sensor 1 option. 0: normally closed; 1: normally open.
   100,// water level (default 100%),
   1,  // device enable
@@ -1724,6 +1724,12 @@ void OpenSprinkler::options_load() {
   for (byte i=0; i<NUM_OPTIONS; i++) {
     options[i] = tmp_buffer[i];
   }
+
+  //set 3pe default options
+  options[OPTION_USE_NTP] = 1;
+  options[OPTION_SENSOR1_TYPE] = SENSOR_TYPE_FLOW;
+
+
   nboards = options[OPTION_EXT_BOARDS]+1;
   nstations = nboards * 8;
   status.enabled = options[OPTION_DEVICE_ENABLE];

@@ -1520,6 +1520,31 @@ static const char log_type_names[] PROGMEM =
     "wl\0"
     "fl\0";
 
+
+void clear_old_logs(){
+#ifdef ESP8266
+
+	//get the first old log to delete
+	ulong OldLogTime = curr_time - (LOGS_HISTORY * 86400);
+	//continue to search for logs to delete untill we canot find logs 7 days in a raw
+	int continuesMissingLogCount  = 0;
+	while(continuesMissingLogCount < 7 && OldLogTime > 0){
+		ultoa(OldLogTime / 86400, tmp_buffer, 10);
+		make_logfile_name(tmp_buffer);
+		if(!SPIFFS.exists(tmp_buffer)){
+			continuesMissingLogCount++;
+		}
+		else{
+			continuesMissingLogCount = 0;
+			SPIFFS.remove(tmp_buffer);
+		}
+		//next log to delete on prev day
+		OldLogTime = OldLogTime - 86400;
+	}
+#endif
+
+}
+
 /** write run record to log on SD card */
 void write_log(byte type, ulong curr_time) {
 
@@ -1646,7 +1671,7 @@ void write_log(byte type, ulong curr_time) {
  * If name is 'all', delete all logs
  */
 void delete_log(char *name) {
-  if (!os.options[OPTION_ENABLE_LOGGING]) return;
+//  if (!os.options[OPTION_ENABLE_LOGGING]) return;
 #if defined(ARDUINO)
   if (!os.status.has_sd) return;
 

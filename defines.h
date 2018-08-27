@@ -39,6 +39,8 @@ typedef unsigned long ulong;
 #define IOT_SERVICE_TOKEN  "iot_service_token" // IoT Service auth key - replace with real token
 #define FLOW_DAILY_LOG_HOUR 23  	      // daily consumption log hour
 #define FLOW_DAILY_LOG_MINUTE 59          // daily consumption * hourly backup log minute
+#define ENABLE_UI             0        //enable or disable web UI
+#define LOGS_HISTORY        90        //days to keep logs history
 /** Firmware version, hardware version, and maximal values */
 #define OS_FW_VERSION  218  // Firmware version: 218 means 2.1.8
                             // if this number is different from the one stored in non-volatile memory
