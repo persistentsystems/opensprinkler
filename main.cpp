@@ -102,7 +102,7 @@ ulong flow_gallons_count = 0;
 ulong flow_station_start_gallons = 0;
 float flow_station_gallons = 0;
 byte prev_flow_state = HIGH;
-
+#if 0
 #ifdef ESP8266
 void debounce_timer_cb(void *arg){
   byte curr_flow_state = digitalReadExt(PIN_FLOWSENSOR);
@@ -117,6 +117,8 @@ void setup_debounce_timer(void) {
 	os_timer_disarm(&debounce_timer);
 	os_timer_setfn(&debounce_timer,  (os_timer_func_t *)debounce_timer_cb, NULL);
 }
+#endif
+#endif
 
 void flow_poll() {
   byte curr_flow_state = digitalReadExt(PIN_FLOWSENSOR);
@@ -137,31 +139,20 @@ void flow_poll() {
   os.flowcount_time_ms = curr;
 
 }
-#endif
 
 volatile byte flow_isr_flag = false;
 /** Flow sensor interrupt service routine */
 #ifdef ESP8266
 ICACHE_RAM_ATTR void flow_isr() // for ESP8266, ISR must be marked ICACHE_RAM_ATTR
-{
-#if 1
- if(os.options[OPTION_SENSOR1_TYPE]!=SENSOR_TYPE_FLOW) return;
-  intr_count++;
-  os_timer_arm(&debounce_timer, debounce_period, NULL);        // One-shot  
-#else
-	intr_count++;
-  flow_isr_flag = true;
-  #endif	
-  
-}
 #else
 void flow_isr()
+#endif
 {
   flow_isr_flag = true;
 
 }
-#endif
 
+#if 0
 #ifdef ESP8266
 void update_pulse_count() {
 	if (intr_count > last_intr_count || flow_count > last_flow_count) {
@@ -180,7 +171,7 @@ void update_pulse_count() {
     }
 }
 #endif
-
+#endif
 
 //flow logs helper functions
 inline bool is_hour(ulong timeSec, int hours){
@@ -453,7 +444,7 @@ void do_setup() {
   os.button_timeout = LCD_BACKLIGHT_TIMEOUT;
 
 #ifdef ESP8266  
-  setup_debounce_timer();
+//  setup_debounce_timer();
 #endif
 }
 
@@ -515,7 +506,6 @@ void handle_web_request(char *p);
 /** Main Loop */
 void do_loop()
 {
-#ifndef ESP8266
   /* If flow_isr_flag is on, do flow sensing.
      todo: not the most efficient way, as we can't do I2C inside ISR.
      need to figure out a more efficient way to do flow sensing */
@@ -523,16 +513,6 @@ void do_loop()
     flow_isr_flag = false;
     flow_poll();
   }
-#else
-#if 0
-  if(flow_isr_flag) {
-    flow_isr_flag = false;
-    flow_poll();
-  }
-#endif
-	update_pulse_count();  
-#endif
-	
 
   static ulong last_time = 0;
   static ulong last_minute = 0;
