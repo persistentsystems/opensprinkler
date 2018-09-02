@@ -36,7 +36,9 @@ typedef unsigned long ulong;
 
 // VALVE CONTROLLER
 
-#define IOT_SERVICE_TOKEN  "iot_service_token" // IoT Service auth key - replace with real token
+//#define IOT_SERVICE_TOKEN  "iot_service_token" // IoT Service auth key - replace with real token
+#define IOT_SERVICE_TOKEN  "OOFKlAsjTkWIchUF9Az01w==" 
+
 #define FLOW_DAILY_LOG_HOUR 23  	      // daily consumption log hour
 #define FLOW_DAILY_LOG_MINUTE 59          // daily consumption * hourly backup log minute
 #define ENABLE_UI             0        //enable or disable web UI
@@ -46,7 +48,7 @@ typedef unsigned long ulong;
                             // if this number is different from the one stored in non-volatile memory
                             // a device reset will be automatically triggered
 
-#define OS_FW_MINOR      1  // Firmware minor version
+#define OS_FW_MINOR      2  // Firmware minor version
 
 /** Hardware version base numbers */
 #define OS_HW_VERSION_BASE   0x00
@@ -209,7 +211,8 @@ typedef unsigned long ulong;
 #define ADDR_NVM_OPTIONS       (ADDR_NVM_STNSPE+(MAX_EXT_BOARDS+1))  // options
 
 /** Default password, location string, weather key, script urls */
-#define DEFAULT_PASSWORD          "a6d82bced638de3def1e9bbb4983225c"  // md5 of 'opendoor'
+//#define DEFAULT_PASSWORD          "a6d82bced638de3def1e9bbb4983225c"  // md5 of 'opendoor'
+#define DEFAULT_PASSWORD          "OOFKlAsjTkWIchUF9Az01w=="  // md5  'token' 
 #define DEFAULT_LOCATION          "Boston,MA"
 #define DEFAULT_WEATHER_KEY       ""
 #define DEFAULT_JAVASCRIPT_URL    "https://ui.opensprinkler.com/js"

@@ -4,10 +4,10 @@ LIBS = .\
   $(ESP_LIBS)/ESP8266WiFi \
   $(ESP_LIBS)/ESP8266WebServer \
   $(ESP_LIBS)/ESP8266mDNS \
-  $(ESP_LIBS)/SSD1306 \
-  $(ESP_LIBS)/rc-switch \
+  /home/user/Arduino/libraries/esp8266-oled-ssd1306 \
+  /home/user/Arduino/libraries/rc-switch \
 
-ESP_ROOT = $(HOME)/esp8266_2.4/
+ESP_ROOT = /home/user/Desktop/Opensprinkler/esp8266_2.4/
 BUILD_ROOT = $(HOME)/OpenSprinklerBin/$(MAIN_NAME)
 
 UPLOAD_SPEED = 230400

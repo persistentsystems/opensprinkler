@@ -105,7 +105,10 @@ byte prev_flow_state = HIGH;
 
 #ifdef ESP8266
 void debounce_timer_cb(void *arg){
-	if (digitalRead(PIN_FLOWSENSOR) == LOW) {
+  byte curr_flow_state = digitalReadExt(PIN_FLOWSENSOR);
+  if(os.options[OPTION_SENSOR1_TYPE]!=SENSOR_TYPE_FLOW) return;
+
+	if (curr_flow_state == LOW) {
 		flow_count++;
 	}
 }
@@ -114,7 +117,7 @@ void setup_debounce_timer(void) {
 	os_timer_disarm(&debounce_timer);
 	os_timer_setfn(&debounce_timer,  (os_timer_func_t *)debounce_timer_cb, NULL);
 }
-#else
+
 void flow_poll() {
   byte curr_flow_state = digitalReadExt(PIN_FLOWSENSOR);
   if(os.options[OPTION_SENSOR1_TYPE]!=SENSOR_TYPE_FLOW) return;
@@ -141,9 +144,15 @@ volatile byte flow_isr_flag = false;
 #ifdef ESP8266
 ICACHE_RAM_ATTR void flow_isr() // for ESP8266, ISR must be marked ICACHE_RAM_ATTR
 {
+#if 1
  if(os.options[OPTION_SENSOR1_TYPE]!=SENSOR_TYPE_FLOW) return;
   intr_count++;
   os_timer_arm(&debounce_timer, debounce_period, NULL);        // One-shot  
+#else
+	intr_count++;
+  flow_isr_flag = true;
+  #endif	
+  
 }
 #else
 void flow_isr()
@@ -515,6 +524,12 @@ void do_loop()
     flow_poll();
   }
 #else
+#if 0
+  if(flow_isr_flag) {
+    flow_isr_flag = false;
+    flow_poll();
+  }
+#endif
 	update_pulse_count();  
 #endif
 	

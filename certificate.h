@@ -2,9 +2,11 @@
 #define PSL_BOARD_1		1		//old board with older hw
 #define PSL_BOARD_2		2
 #define PSL_BOARD_3		3
-#define KIM_BOARD_1		4		//board at Kim's house
+#define KIM_HOUSE_BOARD_1		4		//board at Kim's house
+#define SAN_MARINO_BOARD_1	5
+#define MANDEVILLA_BOARD_1	6		//Mandevilla
 
-#define DEVICE_ID	PSL_BOARD_2
+#define DEVICE_ID	MANDEVILLA_BOARD_1
 
 
 #if DEVICE_ID==PSL_BOARD_1
@@ -14,8 +16,12 @@
 #include <pslBoard2Certificate.h>
 #elif DEVICE_ID==PSL_BOARD_3
 #include <pslBoard3Certificate.h>
-#elif DEVICE_ID==KIM_BOARD_1
-#include <kimBoard1Certificate.h>
+#elif DEVICE_ID==KIM_HOUSE_BOARD_1
+#include <KimHouseBoard1Certificate.h>
+#elif DEVICE_ID==SAN_MARINO_BOARD_1
+#include <SanMarinoBoard1Certificate.h>
+#elif DEVICE_ID==MANDEVILLA_BOARD_1
+#include <MandevillaBoard1Certificate.h>
 #endif
 #if 0
 // The certificate is stored in PMEM - 321
