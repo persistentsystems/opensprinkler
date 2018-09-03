@@ -36,8 +36,7 @@ typedef unsigned long ulong;
 
 // VALVE CONTROLLER
 
-//#define IOT_SERVICE_TOKEN  "iot_service_token" // IoT Service auth key - replace with real token
-#define IOT_SERVICE_TOKEN  "OOFKlAsjTkWIchUF9Az01w==" 
+#define IOT_SERVICE_TOKEN  "iot_service_token" // IoT Service auth key - replace with real token
 
 #define FLOW_DAILY_LOG_HOUR 23  	      // daily consumption log hour
 #define FLOW_DAILY_LOG_MINUTE 59          // daily consumption * hourly backup log minute
