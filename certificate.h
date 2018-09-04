@@ -6,12 +6,11 @@
 #define SAN_MARINO_BOARD_1	5
 #define MANDEVILLA_BOARD_1	6		//Mandevilla
 
-#define DEVICE_ID	MANDEVILLA_BOARD_1
+#define DEVICE_ID	PSL_BOARD_3
 
 
 #if DEVICE_ID==PSL_BOARD_1
-//#include <pslBoard1Certificate.h>
-#include <pslBoard1CertificateLocal.h>
+#include <pslBoard1Certificate.h>
 #elif DEVICE_ID==PSL_BOARD_2
 #include <pslBoard2Certificate.h>
 #elif DEVICE_ID==PSL_BOARD_3

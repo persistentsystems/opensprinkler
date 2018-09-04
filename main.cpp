@@ -80,14 +80,13 @@ void httpget_callback(byte, uint16_t, uint16_t);
 extern char tmp_buffer[];       // scratch buffer
 
 const unsigned int debounce_period = 1; // milli-seconds. Change as appropriate.
+const unsigned int sensor_poll_period = 10;	// milli-seconds
 volatile bool debounce_in_progress = false;
-volatile unsigned long intr_count = 0;
-unsigned long last_intr_count = 0;
-unsigned long last_flow_count = 0;
+volatile bool prev_flow_sensor_state;
 
 
 #ifdef ESP8266
-os_timer_t debounce_timer;
+os_timer_t flow_sensor_poll_timer;
 ESP8266WebServerSecure *wifi_server = NULL;
 static uint16_t led_blink_ms = LED_FAST_BLINK;
 #endif
@@ -102,24 +101,48 @@ ulong flow_gallons_count = 0;
 ulong flow_station_start_gallons = 0;
 float flow_station_gallons = 0;
 byte prev_flow_state = HIGH;
-#if 0
+
+
 #ifdef ESP8266
-void debounce_timer_cb(void *arg){
-  byte curr_flow_state = digitalReadExt(PIN_FLOWSENSOR);
-  if(os.options[OPTION_SENSOR1_TYPE]!=SENSOR_TYPE_FLOW) return;
+#define SENSOR_DEBOUNCE_COUNT_MAX	5	//5*debounce_period msec
+#define SENSOR_INCORRECT_SAMPLES_MIN	2	
 
-	if (curr_flow_state == LOW) {
-		flow_count++;
+unsigned int flow_sensor_high_sample;
+unsigned int sensor_debounce_count;
+
+void flowsenseor_poll_timer_cb(void *arg){
+	bool flow_sensor_state = digitalReadExt(PIN_FLOWSENSOR);
+	if(debounce_in_progress == true){
+		//sample pin
+		if(flow_sensor_state == HIGH){
+			flow_sensor_high_sample++;
+		}
+		sensor_debounce_count++;
+		if(sensor_debounce_count == SENSOR_DEBOUNCE_COUNT_MAX ||
+			flow_sensor_high_sample > SENSOR_INCORRECT_SAMPLES_MIN){
+			//stop debounce and sampling
+			debounce_in_progress = false;
+			if(flow_sensor_high_sample < SENSOR_INCORRECT_SAMPLES_MIN){
+				//this is real active low pulse
+				flow_count++;
+			}
+		}
 	}
+	else if(prev_flow_sensor_state == HIGH && flow_sensor_state == LOW && debounce_in_progress == false){
+		//falling edge detected.
+		//start debounce count and sample
+		sensor_debounce_count = 0;
+		debounce_in_progress = true;
+		flow_sensor_high_sample = 0;
+	}
+	prev_flow_sensor_state = flow_sensor_state;
 }
-
-void setup_debounce_timer(void) {
-	os_timer_disarm(&debounce_timer);
-	os_timer_setfn(&debounce_timer,  (os_timer_func_t *)debounce_timer_cb, NULL);
+void setup_flowsensor_polling_timer(void) {
+	os_timer_disarm(&flow_sensor_poll_timer);
+	os_timer_setfn(&flow_sensor_poll_timer,  (os_timer_func_t *)flowsenseor_poll_timer_cb, NULL);
+	os_timer_arm(&flow_sensor_poll_timer, sensor_poll_period, 1);        // perodic timer
 }
 #endif
-#endif
-
 void flow_poll() {
   byte curr_flow_state = digitalReadExt(PIN_FLOWSENSOR);
   if(os.options[OPTION_SENSOR1_TYPE]!=SENSOR_TYPE_FLOW) return;
@@ -151,27 +174,6 @@ void flow_isr()
   flow_isr_flag = true;
 
 }
-
-#if 0
-#ifdef ESP8266
-void update_pulse_count() {
-	if (intr_count > last_intr_count || flow_count > last_flow_count) {
-		last_intr_count = intr_count;
-		last_flow_count = flow_count;
-		DEBUG_PRINT("Intr_count: ");
-		DEBUG_PRINT(intr_count);
-		DEBUG_PRINT("   Flow_count: ");
-		DEBUG_PRINTLN(flow_count);
-		os.lcd.setCursor(0, 2);
-		ultoa(intr_count, tmp_buffer, 10);
-		os.lcd.print(tmp_buffer);  
-		os.lcd.setCursor(10, 2);
-		ultoa(flow_count, tmp_buffer, 10);
-		os.lcd.print(tmp_buffer);
-    }
-}
-#endif
-#endif
 
 //flow logs helper functions
 inline bool is_hour(ulong timeSec, int hours){
@@ -445,6 +447,8 @@ void do_setup() {
 
 #ifdef ESP8266  
 //  setup_debounce_timer();
+	prev_flow_sensor_state = digitalReadExt(PIN_FLOWSENSOR);
+  setup_flowsensor_polling_timer();
 #endif
 }
 
@@ -509,10 +513,12 @@ void do_loop()
   /* If flow_isr_flag is on, do flow sensing.
      todo: not the most efficient way, as we can't do I2C inside ISR.
      need to figure out a more efficient way to do flow sensing */
+#ifndef ESP8266     
   if(flow_isr_flag) {
     flow_isr_flag = false;
     flow_poll();
   }
+#endif
 
   static ulong last_time = 0;
   static ulong last_minute = 0;
