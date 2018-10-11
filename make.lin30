@@ -7,8 +7,8 @@ LIBS = .\
   /home/user/Arduino/libraries/esp8266-oled-ssd1306 \
   /home/user/Arduino/libraries/rc-switch \
 
-ESP_ROOT = /home/user/Desktop/Opensprinkler/esp8266_2.4/
-BUILD_ROOT = $(HOME)/OpenSprinklerBin/$(MAIN_NAME)
+ESP_ROOT =  $(HOME)/esp8266_2.4
+BUILD_ROOT =./Build/$(MAIN_NAME)
 
 UPLOAD_SPEED = 230400
 UPLOAD_VERB = -v
