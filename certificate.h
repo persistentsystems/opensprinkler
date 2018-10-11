@@ -1,28 +1,5 @@
 #ifdef ESP8266
-#define PSL_BOARD_1		1		//old board with older hw
-#define PSL_BOARD_2		2
-#define PSL_BOARD_3		3
-#define KIM_HOUSE_BOARD_1		4		//board at Kim's house
-#define SAN_MARINO_BOARD_1	5
-#define MANDEVILLA_BOARD_1	6		//Mandevilla
 
-#define DEVICE_ID	PSL_BOARD_3
-
-
-#if DEVICE_ID==PSL_BOARD_1
-#include <pslBoard1Certificate.h>
-#elif DEVICE_ID==PSL_BOARD_2
-#include <pslBoard2Certificate.h>
-#elif DEVICE_ID==PSL_BOARD_3
-#include <pslBoard3Certificate.h>
-#elif DEVICE_ID==KIM_HOUSE_BOARD_1
-#include <KimHouseBoard1Certificate.h>
-#elif DEVICE_ID==SAN_MARINO_BOARD_1
-#include <SanMarinoBoard1Certificate.h>
-#elif DEVICE_ID==MANDEVILLA_BOARD_1
-#include <MandevillaBoard1Certificate.h>
-#endif
-#if 0
 // The certificate is stored in PMEM - 321
 static const uint8_t x509[] PROGMEM = {
   0x30, 0x82, 0x01, 0x3d, 0x30, 0x81, 0xe8, 0x02, 0x09, 0x00, 0xfe, 0x56,
@@ -84,7 +61,7 @@ static const uint8_t rsakey[] PROGMEM = {
   0x2c, 0x3a, 0xcd, 0x0a, 0x9a, 0x4d, 0x7c, 0xad, 0x29, 0xd6, 0x36, 0x57,
   0xd5, 0xdf, 0x34, 0xeb, 0x26, 0x03
 };
-#endif
+
 #endif
 
 
