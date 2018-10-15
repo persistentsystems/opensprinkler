@@ -4,8 +4,8 @@ LIBS = .\
   $(ESP_LIBS)/ESP8266WiFi \
   $(ESP_LIBS)/ESP8266WebServer \
   $(ESP_LIBS)/ESP8266mDNS \
-  /home/user/Arduino/libraries/esp8266-oled-ssd1306 \
-  /home/user/Arduino/libraries/rc-switch \
+  $(ESP_LIBS)/SSD1306 \
+  $(ESP_LIBS)/rc-switch \
 
 ESP_ROOT =  $(HOME)/esp8266_2.4
 BUILD_ROOT =./Build/$(MAIN_NAME)
