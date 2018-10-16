@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 # This script generates a self-signed certificate for use by the ESP8266
 # Replace your-name-here with somethine appropriate before running and use
 # the generated .H files in your code as follows:
@@ -19,10 +19,9 @@
 
 # 1024 or 512.  512 saves memory...
 IP=$1
-BITS=$2
-C=$PWD
+BITS=512
 CA_DIR=~/CA/CA$BITS
-pushd ./tmp
+
 
 
 openssl genrsa -out tls.key_$BITS.pem $BITS
@@ -40,9 +39,7 @@ openssl req -out tls.x509_$BITS.req -key tls.key_$BITS.pem -new -config certs.co
 openssl x509 -req -in tls.x509_$BITS.req  -out tls.x509_$BITS.pem -sha256 -CAcreateserial -days 5000 -CA $CA_DIR/ca_x509.pem -CAkey $CA_DIR/ca_key.pem 
 openssl x509 -in tls.x509_$BITS.pem -outform DER -out tls.x509_$BITS.cer
 
-xxd -i tls.key_$BITS       | sed 's/.*{//' | sed 's/\};//' | sed 's/unsigned.*//' > "$C/key.h"
-xxd -i tls.x509_$BITS.cer  | sed 's/.*{//' | sed 's/\};//' | sed 's/unsigned.*//' > "$C/x509.h"
+xxd -i tls.key_$BITS       | sed 's/.*{//' | sed 's/\};//' | sed 's/unsigned.*//' > "key.h"
+xxd -i tls.x509_$BITS.cer  | sed 's/.*{//' | sed 's/\};//' | sed 's/unsigned.*//' > "$x509.h"
 
-#rm -f tls.key_$BITS.pem tls.key_$BITS certs.conf tls.x509_$BITS.req tls.x509_$BITS.pem tls.srl tls.x509_$BITS.cer 
 
-popd
