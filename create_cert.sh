@@ -40,6 +40,6 @@ openssl x509 -req -in tls.x509_$BITS.req  -out tls.x509_$BITS.pem -sha256 -CAcre
 openssl x509 -in tls.x509_$BITS.pem -outform DER -out tls.x509_$BITS.cer
 
 xxd -i tls.key_$BITS       | sed 's/.*{//' | sed 's/\};//' | sed 's/unsigned.*//' > "key.h"
-xxd -i tls.x509_$BITS.cer  | sed 's/.*{//' | sed 's/\};//' | sed 's/unsigned.*//' > "$x509.h"
+xxd -i tls.x509_$BITS.cer  | sed 's/.*{//' | sed 's/\};//' | sed 's/unsigned.*//' > "x509.h"
 
 
