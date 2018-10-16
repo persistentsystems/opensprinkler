@@ -29,7 +29,7 @@
 #include "gpio.h"
 #include "images.h"
 #include "testmode.h"
-#include "certificate.h"
+
 
 /** Declare static data members */
 NVConData OpenSprinkler::nvdata;
