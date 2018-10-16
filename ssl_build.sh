@@ -13,4 +13,3 @@ echo "create certificate"
 echo "build code"
 make -f make.lin30
 
-cp ./Build/mainArduino/mainArduino_generic/mainArduino.bin $C/$IP.bin
