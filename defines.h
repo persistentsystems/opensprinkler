@@ -36,7 +36,7 @@ typedef unsigned long ulong;
 
 // VALVE CONTROLLER
 
-#define IOT_SERVICE_TOKEN  "iot_service_token" // IoT Service auth key - replace with real token
+#define IOT_SERVICE_TOKEN  "GEN3PESERVICEPWD" // IoT Service auth key - replace with real token
 
 #define FLOW_DAILY_LOG_HOUR 23  	      // daily consumption log hour
 #define FLOW_DAILY_LOG_MINUTE 59          // daily consumption * hourly backup log minute
@@ -211,8 +211,8 @@ typedef unsigned long ulong;
 
 /** Default password, location string, weather key, script urls */
 //#define DEFAULT_PASSWORD          "a6d82bced638de3def1e9bbb4983225c"  // md5 of 'opendoor'
-#define DEFAULT_PASSWORD          "OOFKlAsjTkWIchUF9Az01w=="  // md5  'token' 
-#define DEFAULT_LOCATION          "Boston,MA"
+#define DEFAULT_PASSWORD          "GEN3PEUSERPWD"  // md5  'token'
+#define DEFAULT_LOCATION          "GEN3PELOCATION"
 #define DEFAULT_WEATHER_KEY       ""
 #define DEFAULT_JAVASCRIPT_URL    "https://ui.opensprinkler.com/js"
 #define DEFAULT_WEATHER_URL       "weather.opensprinkler.com"

@@ -265,7 +265,7 @@ const char op_max[] PROGMEM = {
 /** Option values (stored in RAM) */
 byte OpenSprinkler::options[] = {
   OS_FW_VERSION, // firmware version
-  28, // default time zone: GMT-5
+  GEN3PETIMEZONE, // default time zone: GMT-5
   1,  // 0: disable NTP sync, 1: enable NTP sync
   1,  // 0: use static ip, 1: use dhcp
   0,  // this and next 3 bytes define static ip
