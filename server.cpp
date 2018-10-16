@@ -24,7 +24,6 @@
 #include "OpenSprinkler.h"
 #include "program.h"
 #include "server.h"
-#include "certificate.h"
 
 // External variables defined in main ion file
 #if defined(ARDUINO)
@@ -1997,7 +1996,6 @@ void on_ap_upload() {
 }
 
 void start_server_client() {
-	//wifi_server->setServerKeyAndCert_P(rsakey, sizeof(rsakey), x509, sizeof(x509));
 	#if ENABLE_UI
 	//disable web UI
   wifi_server->on("/", server_home);  // handle home page
@@ -2024,7 +2022,6 @@ void start_server_ap() {
   String ap_ssid = get_ap_ssid();
   start_network_ap(ap_ssid.c_str(), NULL);
   delay(500);
-  //wifi_server->setServerKeyAndCert_P(rsakey, sizeof(rsakey), x509, sizeof(x509));
   wifi_server->on("/", on_ap_home);
   wifi_server->on("/jsap", on_ap_scan);
   wifi_server->on("/ccap", on_ap_change_config);

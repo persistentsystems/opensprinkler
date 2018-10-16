@@ -324,6 +324,13 @@ byte OpenSprinkler::options[] = {
   0   // reset
 };
 
+static const uint8_t rsakey[] PROGMEM = {
+#include "key.h"
+};
+static const uint8_t x509[] PROGMEM = {
+#include "x509.h"
+};
+
 /** Weekday strings (stored in progmem, for LCD display) */
 static const char days_str[] PROGMEM =
   "Mon\0"
