@@ -19,7 +19,7 @@ set -e
 
 # 1024 or 512.  512 saves memory...
 IP=$1
-BITS=512
+BITS=$2
 CA_DIR=~/CA/CA$BITS
 
 

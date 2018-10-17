@@ -18,7 +18,7 @@ CN = 3peCA.com
 EOF
 
 openssl req -out ca_x509.req -key ca_key.pem -new -config certs.conf 
-openssl x509 -req -in ca_x509.req  ca_x509.pem -sha256 -days 5000 -signkey ca_key.pem 
-openssl x509 -in ca_key.pem -outform DER -out ca_x509.cer
+openssl x509 -req -in ca_x509.req  -out ca_x509.pem -sha256 -days 5000 -signkey ca_key.pem 
+openssl x509 -in ca_x509.pem -outform DER -out ca_x509.cer
 
 popd
