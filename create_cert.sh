@@ -45,4 +45,4 @@ xxd -i tls.x509_$BITS.cer  | sed 's/.*{//' | sed 's/\};//' | sed 's/unsigned.*//
 SERIAL=$(openssl x509 -inform DER -in tls.x509_$BITS.cer -noout -serial | sed 's/serial=//')
 echo $SERIAL
 
-#cat secure.json | jq --arg serial $SERIAL '.+{"ser" : $serial }' > "secure.json"
+cat secure.json | jq --arg serial $SERIAL '.+{"ser" : $serial }' > "secure.json"

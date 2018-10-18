@@ -3,8 +3,8 @@ set -e
 LOCATION="$1"
 TIMEZONE=$2
 echo "generating passwords"
-SVRPWD=$(openssl rand -base64 32)
-USRPWD=$(openssl rand -base64 32)
+SVRPWD=$(pwgen -cns 32 1)
+USRPWD=$(pwgen -cnb 32 1)
 USRPWDMD5=$(echo $USRPWD | md5sum)
 echo $USRPWDMD5
 echo "saving passwords to json"
