@@ -12,7 +12,7 @@ SERIAL=$(openssl x509 -inform DER -in tls.x509_$BITS.cer -noout -serial | sed 's
 echo $SERIAL
 echo $USRPWDMD5
 echo "saving passwords to json and certificate serial"
-jq -n --arg USRPWD $USRPWD --arg SVRPWD $SVRPWD --arg SERIAL $SERIAL '{"userPwd": $USRPWD, "servicePwd": $SVRPWD "serial": $SERIAL }' > secure.json
+jq -n --arg USRPWD $USRPWD --arg SVRPWD $SVRPWD --arg SERIAL $SERIAL '{"userPwd": $USRPWD, "servicePwd": $SVRPWD, "serial": $SERIAL }' > secure.json
 echo "modifing code ..."
 echo $LOCATION
 echo $TIMEZONE
