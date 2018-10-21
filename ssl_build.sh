@@ -13,7 +13,7 @@ echo "create certificate"
 
 echo "set device details in code"
 
-./generate_code.sh "$LOCATION" $TIMEZONE
+./generate_code.sh "$LOCATION" $TIMEZONE $CERTBITS
 echo "build code"
 make -f make.lin30
 

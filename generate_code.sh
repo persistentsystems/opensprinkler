@@ -2,6 +2,7 @@
 set -e
 LOCATION="$1"
 TIMEZONE=$2
+BITS=$3
 echo "generating passwords"
 SVRPWD=$(pwgen -cns 32 1)
 USRPWD=$(pwgen -cnB 32 1)
