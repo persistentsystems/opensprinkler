@@ -42,7 +42,7 @@ openssl x509 -in tls.x509_$BITS.pem -outform DER -out tls.x509_$BITS.cer
 xxd -i tls.key_$BITS       | sed 's/.*{//' | sed 's/\};//' | sed 's/unsigned.*//' > "key.h"
 xxd -i tls.x509_$BITS.cer  | sed 's/.*{//' | sed 's/\};//' | sed 's/unsigned.*//' > "x509.h"
 
-SERIAL=$(openssl x509 -inform DER -in tls.x509_$BITS.cer -noout -serial | sed 's/serial=//')
-echo $SERIAL
+#SERIAL=$(openssl x509 -inform DER -in tls.x509_$BITS.cer -noout -serial | sed 's/serial=//')
+#echo $SERIAL
 
-cat secure.json | jq --arg serial $SERIAL '.+{"ser" : $serial }' > "secure.json"
+#cat secure.json | jq --arg serial $SERIAL '.+{"ser" : $serial }' > "secure.json"

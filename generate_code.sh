@@ -6,10 +6,12 @@ echo "generating passwords"
 SVRPWD=$(pwgen -cns 32 1)
 USRPWD=$(pwgen -cnB 32 1)
 USRPWDMD5=$(printf '%s' $USRPWD | md5sum | cut -d ' ' -f 1)
+SERIAL=$(openssl x509 -inform DER -in tls.x509_$BITS.cer -noout -serial | sed 's/serial=//')
 
+echo $SERIAL
 echo $USRPWDMD5
-echo "saving passwords to json"
-jq -n --arg USRPWD $USRPWD --arg SVRPWD $SVRPWD '{"userPwd": $USRPWD, "servicePwd": $SVRPWD }' > secure.json
+echo "saving passwords to json and certificate serial"
+jq -n --arg USRPWD $USRPWD --arg SVRPWD $SVRPWD --arg SERIAL $SERIAL '{"userPwd": $USRPWD, "servicePwd": $SVRPWD "serial": $SERIAL }' > secure.json
 echo "modifing code ..."
 echo $LOCATION
 echo $TIMEZONE
