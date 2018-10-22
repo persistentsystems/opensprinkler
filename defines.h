@@ -214,9 +214,9 @@ typedef unsigned long ulong;
 #define DEFAULT_PASSWORD          "GEN3PEUSERPWD"  // md5  'token'
 #define DEFAULT_LOCATION          "GEN3PELOCATION"
 #define DEFAULT_WEATHER_KEY       ""
-#define DEFAULT_JAVASCRIPT_URL    ""//"https://ui.opensprinkler.com/js"
-#define DEFAULT_WEATHER_URL       ""//"weather.opensprinkler.com"
-#define DEFAULT_IFTTT_URL         ""//"maker.ifttt.com"
+#define DEFAULT_JAVASCRIPT_URL    "https://ui.opensprinkler.com/js"
+#define DEFAULT_WEATHER_URL       "weather.opensprinkler.com"
+#define DEFAULT_IFTTT_URL         "maker.ifttt.com"
 
 /** Macro define of each option
   * Refer to OpenSprinkler.cpp for details on each option
