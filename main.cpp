@@ -1284,7 +1284,7 @@ void ip2string(char* str, byte ip[4]) {
 
 void push_message(byte type, uint32_t lval, float fval, const char* sval) {
 
-#if !defined(ARDUINO) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__) || defined(ESP8266)
+/*#if !defined(ARDUINO) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__) || defined(ESP8266)
 
   static const char* server = DEFAULT_IFTTT_URL;
   static char key[IFTTT_KEY_MAXSIZE];
@@ -1412,7 +1412,7 @@ void push_message(byte type, uint32_t lval, float fval, const char* sval) {
   char postBuffer[1500];
   sprintf(postBuffer, "POST /trigger/sprinkler/with/key/%s HTTP/1.0\r\n"
                       "Host: %s\r\n"
-                      "Accept: */*\r\n"
+ //                     "Accept: *r\n"
                       "Content-Length: %d\r\n"
                       "Content-Type: application/json\r\n"
                       "\r\n%s", key, server, strlen(postval), postval);
@@ -1464,7 +1464,7 @@ void push_message(byte type, uint32_t lval, float fval, const char* sval) {
   char postBuffer[1500];
   sprintf(postBuffer, "POST /trigger/sprinkler/with/key/%s HTTP/1.0\r\n"
                       "Host: %s\r\n"
-                      "Accept: */*\r\n"
+                      "Accept: *\r\n"
                       "Content-Length: %d\r\n"
                       "Content-Type: application/json\r\n"
                       "\r\n%s", key, host->h_name, strlen(postval), postval);
@@ -1488,7 +1488,7 @@ void push_message(byte type, uint32_t lval, float fval, const char* sval) {
 
 #endif
   
-#endif
+#endif*/
 }
 
 // ================================

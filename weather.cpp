@@ -50,12 +50,13 @@ void write_log(byte type, ulong curr_time);
 //static char website[] PROGMEM = DEFAULT_WEATHER_URL ;
 
 static void getweather_callback(byte status, uint16_t off, uint16_t len) {
+	/*
 #if defined(ARDUINO) && !defined(ESP8266)
   char *p = (char*)Ethernet::buffer + off;
 #else
   char *p = ether_buffer;
 #endif
-  /* scan the buffer until the first & symbol */
+  /* scan the buffer until the first & symbol
   while(*p && *p!='&') {
     p++;
   }
@@ -122,6 +123,7 @@ static void getweather_callback(byte status, uint16_t off, uint16_t len) {
 
   os.checkwt_success_lasttime = os.now_tz();
   write_log(LOGDATA_WATERLEVEL, os.checkwt_success_lasttime);
+  */
 }
 
 #if !defined(ARDUINO) || defined(ESP8266)
@@ -155,6 +157,7 @@ void peel_http_header() { // remove the HTTP header
 
 #if defined(ARDUINO)  // for AVR
 void GetWeather() {
+	/*
   // perform DNS lookup for every query
   nvm_read_block(tmp_buffer, (void*)ADDR_NVM_WEATHERURL, MAX_WEATHERURL);
 
@@ -224,11 +227,12 @@ void GetWeather() {
   ether.browseUrl(PSTR("/weather"), dst, PSTR("*"), getweather_callback);
   ether.hisport = _port;
 #endif
+*/
 }
 
 #else // for RPI/BBB/LINUX
 
-void GetWeather() {
+void GetWeather() {/*
   EthernetClient client;
   uint16_t port = 80;
   char * delim;
@@ -319,6 +323,7 @@ void GetWeather() {
     break;
   }
   client.stop();
+  */
 }
 #endif // GetWeather()
 
