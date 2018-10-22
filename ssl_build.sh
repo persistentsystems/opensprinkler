@@ -5,6 +5,7 @@ IP=$1
 LOCATION="$2"
 TIMEZONE=$3
 CERTBITS=$4
+VERSION=${5:-1}
 C=$PWD
 
 
@@ -15,5 +16,5 @@ echo "set device details in code"
 
 ./generate_code.sh "$LOCATION" $TIMEZONE $CERTBITS
 echo "build code"
-make -f make.lin30
+make -f make.V$VERSION
 
