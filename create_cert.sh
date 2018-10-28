@@ -20,7 +20,7 @@ set -e
 # 1024 or 512.  512 saves memory...
 IP=$1
 BITS=$2
-CA_DIR=~/CA/CA$BITS
+
 
 
 
@@ -36,7 +36,7 @@ O = 3pe irrigation device
 CN =$IP
 EOF
 openssl req -out tls.x509_$BITS.req -key tls.key_$BITS.pem -new -config certs.conf 
-openssl x509 -req -in tls.x509_$BITS.req  -out tls.x509_$BITS.pem -sha256 -CAcreateserial -days 5000 -CA $CA_DIR/ca_x509.pem -CAkey $CA_DIR/ca_key.pem 
+openssl x509 -req -in tls.x509_$BITS.req  -out tls.x509_$BITS.pem -sha256 -CAcreateserial -days 5000 -CA ca_x509.pem -CAkey ca_key.pem 
 openssl x509 -in tls.x509_$BITS.pem -outform DER -out tls.x509_$BITS.cer
 
 xxd -i tls.key_$BITS       | sed 's/.*{//' | sed 's/\};//' | sed 's/unsigned.*//' > "key.h"
