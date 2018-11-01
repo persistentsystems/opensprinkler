@@ -98,6 +98,7 @@ static void getweather_callback(byte status, uint16_t off, uint16_t len) {
     }
   }
   
+  /* 3pe - do not update time zone
   if (findKeyVal(p, tmp_buffer, TMP_BUFFER_SIZE, PSTR("tz"), true)) {
     v = atoi(tmp_buffer);
     if (v>=0 && v<= 108) {
@@ -108,7 +109,7 @@ static void getweather_callback(byte status, uint16_t off, uint16_t len) {
         os.weather_update_flag |= WEATHER_UPDATE_TZ;
       }
     }
-  }
+  }*/
   
   if (findKeyVal(p, tmp_buffer, TMP_BUFFER_SIZE, PSTR("rd"), true)) {
     v = atoi(tmp_buffer);
