@@ -964,7 +964,7 @@ void do_loop()
           }
         }
         if (!willrun) {
-          os.reboot_dev();
+          //os.reboot_dev(); //commented on 17 June 2019 to test reboot not happen in between of program
         }
       }
     }
