@@ -440,7 +440,7 @@ byte OpenSprinkler::start_network() {
 void OpenSprinkler::reboot_dev() {
   lcd_print_line_clear_pgm(PSTR("Rebooting..."), 0);
 #ifdef ESP8266
-  //ESP.restart();
+  ESP.restart();
 #else
   resetFunc();
 #endif
