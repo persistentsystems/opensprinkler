@@ -210,7 +210,6 @@ typedef unsigned long ulong;
 #define ADDR_NVM_OPTIONS       (ADDR_NVM_STNSPE+(MAX_EXT_BOARDS+1))  // options
 
 /** Default password, location string, weather key, script urls */
-//#define DEFAULT_PASSWORD          "a6d82bced638de3def1e9bbb4983225c"  // md5 of 'opendoor'
 #define DEFAULT_PASSWORD          "GEN3PEUSERPWD"  // md5  'token'
 #define DEFAULT_LOCATION          "GEN3PELOCATION"
 #define DEFAULT_WEATHER_KEY       ""
