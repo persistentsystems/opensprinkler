@@ -32,7 +32,7 @@ if(jd.ip==0) return;
 var ip=''+(jd.ip%256)+'.'+((jd.ip/256>>0)%256)+'.'+(((jd.ip/256>>0)/256>>0)%256)+'.'+(((jd.ip/256>>0)/256>>0)/256>>0);
 id('msg').innerHTML='<b><font color=green>Connected! Device IP: '+ip+'</font></b><br>Device is rebooting. Switch back to<br>the above WiFi network, and then<br>click the button below to redirect.'
 id('butt').innerHTML='Go to '+ip;id('butt').disabled=false;
-id('butt').onclick=function rd(){window.open('http://'+ip);}
+id('butt').onclick=function rd(){window.open('https://'+ip);}
 clearInterval(tci);
 }
 }    
@@ -132,9 +132,9 @@ xhr.send(fd);
 const char sta_update_html[] PROGMEM = R"(<head>
 <title>OpenSprinkler Firmware Update</title>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
-<link rel='stylesheet' href='http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css' type='text/css'>
-<script src='http://code.jquery.com/jquery-1.9.1.min.js' type='text/javascript'></script>
-<script src='http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js' type='text/javascript'></script>
+<link rel='stylesheet' href='https://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css' type='text/css'>
+<script src='https://code.jquery.com/jquery-1.9.1.min.js' type='text/javascript'></script>
+<script src='https://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js' type='text/javascript'></script>
 </head>
 <body>
 <div data-role='page' id='page_update'>
