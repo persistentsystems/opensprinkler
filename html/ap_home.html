@@ -32,7 +32,7 @@ function tryConnect() {
     var ip=''+(jd.ip%256)+'.'+((jd.ip/256>>0)%256)+'.'+(((jd.ip/256>>0)/256>>0)%256)+'.'+(((jd.ip/256>>0)/256>>0)/256>>0);
     id('msg').innerHTML='<b><font color=green>Connected! Device IP: '+ip+'</font></b><br>Device is rebooting. Switch back to<br>the above WiFi network, and then<br>click the button below to redirect.'
     id('butt').innerHTML='Go to '+ip;id('butt').disabled=false;
-    id('butt').onclick=function rd(){window.open('http://'+ip);}
+    id('butt').onclick=function rd(){window.open('https://'+ip);}
     clearInterval(tci);
     }
   }    
